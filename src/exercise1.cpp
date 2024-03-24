@@ -5,9 +5,9 @@
 #define _MAKE_STR(x) __MAKE_STR(x)
 #define __MAKE_STR(x) #x
 
-#include "exercise1_STUDENTID.hpp"
+#include "exercise1_20234191.hpp"
 #include "raisim/RaisimServer.hpp"
-
+#include <cmath>
 
 int main(int argc, char* argv[]) {
   // create raisim world
@@ -22,14 +22,16 @@ int main(int argc, char* argv[]) {
 
   // anymal configuration
   Eigen::VectorXd jointNominalConfig(anymal->getGeneralizedCoordinateDim());
-  jointNominalConfig << 0, 0, 0.54, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
+  jointNominalConfig << 0, 1, 0.54, 1.0, 0.0, 0.2, 0.3, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.8, -0.1, 0.2, -0.03, -0.4, 0.8;
   anymal->setGeneralizedCoordinate(jointNominalConfig);
   anymal->updateKinematics();
 
   // debug sphere
   auto debugSphere = server.addVisualSphere("debug_sphere", 0.02);
   debugSphere->setColor(1,0,0,1);
-  debugSphere->setPosition(getEndEffectorPosition(jointNominalConfig));
+
+  Eigen::Vector3d position_e = getEndEffectorPosition(jointNominalConfig);
+  debugSphere->setPosition(position_e);
 
   // solution sphere
   auto answerSphere = server.addVisualSphere("answer_sphere", 0.04);
@@ -37,6 +39,8 @@ int main(int argc, char* argv[]) {
   raisim::Vec<3> pos;
   anymal->getFramePosition("LH_shank_fixed_LH_FOOT", pos);
   answerSphere->setPosition(pos.e());
+
+  cout << "mse : " << std::sqrt((position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0]) + (position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0]) + (position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0])) << endl;
 
   // visualization
   server.launchServer();

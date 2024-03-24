@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 project(ME553_2024)
 
 set(CMAKE_CXX_STANDARD 17)
+
+# set path
+set(CMAKE_PREFIX_PATH /home/jay/workspace/raisimLib/thirdParty/Eigen3 /home/jay/workspace/raisimLib/raisim/linux)
+
 include(cmake/helper.cmake)
 
 # exercise
