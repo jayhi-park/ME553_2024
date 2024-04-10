@@ -7,7 +7,7 @@
 #define __MAKE_STR(x) #x
 
 #include "raisim/RaisimServer.hpp"
-#include "exercise2_STUDENTID.hpp"
+#include "exercise2_20234191.hpp"
 
 int main(int argc, char* argv[]) {
   auto binaryPath = raisim::Path::setFromArgv(argv[0]);
@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
   Eigen::VectorXd gc(anymal->getGeneralizedCoordinateDim());
   Eigen::VectorXd gv(anymal->getDOF());
 
-  gc << 0, 0, 10.54, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
-  gv << 0.1, 0.2, 0.3, 0.1, 0.4, 0.3, 0.1,0.1,0.1, 0.2,0.2,0.2, 0.3,0.3,0.3, 0.4,0.4,0.4;
+  gc << 0, 2, 10.54, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
+  gv << 0.1, 0.4, 0.3, 0.0, 0.4, 0.3, 0.1,0.1,0.1, 0.8,0.2,0.2, 0.3,0.3,0.3, 0.4,0.4,0.4;
   anymal->setState(gc, gv);
 
   // visualization

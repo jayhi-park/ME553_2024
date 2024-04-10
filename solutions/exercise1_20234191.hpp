@@ -95,7 +95,7 @@ inline Eigen::Vector3d getEndEffectorPosition (const Eigen::VectorXd& gc) {
   joints.back()->ChangeFramefrom2toB(position_vector_be);
 
   // r_wb
-  Eigen::Vector3d position_vector_wb = gc.segment(0, 2);
+  Eigen::Vector3d position_vector_wb = gc.segment(0, 3);
 
   // R_wb
   Eigen::Quaternion<double> q(gc[3], gc[4], gc[5], gc[6]);

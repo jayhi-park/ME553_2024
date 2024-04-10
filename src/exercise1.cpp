@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
   // anymal configuration
   Eigen::VectorXd jointNominalConfig(anymal->getGeneralizedCoordinateDim());
-  jointNominalConfig << 0, 1, 0.54, 1.0, 0.0, 0.2, 0.3, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.8, -0.1, 0.2, -0.03, -0.4, 0.8;
+  jointNominalConfig << 0, 0, 10.54, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
   anymal->setGeneralizedCoordinate(jointNominalConfig);
   anymal->updateKinematics();
 
@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
   raisim::Vec<3> pos;
   anymal->getFramePosition("LH_shank_fixed_LH_FOOT", pos);
   answerSphere->setPosition(pos.e());
+
+  cout << position_e << endl;
 
   cout << "mse : " << std::sqrt((position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0]) + (position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0]) + (position_e[0] - pos.e()[0])*(position_e[0] - pos.e()[0])) << endl;
 
