@@ -633,19 +633,19 @@ public:
       M_j.block<3,3>(3, 0) = child_link->mass_ * VecToSkew(child_link->r_po_w_);
       M_j.block<3,3>(3, 3) = child_link->inertia_w_ - child_link->mass_ * VecToSkew(child_link->r_po_w_) * VecToSkew(child_link->r_po_w_);
 
-      // make twist_j
-      Eigen::Matrix<double, 6, 1> twist_j;
-      twist_j << joint_j->a_cp_w_ , joint_j->alpha_cp_w_;
+      // make twist_dot_j
+      Eigen::Matrix<double, 6, 1> twist_dot_j;
+      twist_dot_j << joint_j->a_cp_w_ , joint_j->alpha_cp_w_;
 
       if (j == leaf){
-        FT[j] = M_j * twist_j + b_j;
+        FT[j] = M_j * twist_dot_j + b_j;
         non_linearities_.segment(6 + j, 1) = joint_j->S_w_.transpose() * FT[j];
       }
       else {
         Eigen::Matrix<double, 6, 1> FT_by_child;
         FT_by_child << FT[j + 1].segment(0, 3), FT[j + 1].segment(3, 3) + VecToSkew(moving_joints_[j + 1]->r_pc_w_) * (FT[j + 1].segment(0, 3));
-        twist_j << joint_j->a_cp_w_ , joint_j->alpha_cp_w_;
-        FT[j] = M_j * twist_j + b_j + FT_by_child;
+        twist_dot_j << joint_j->a_cp_w_ , joint_j->alpha_cp_w_;
+        FT[j] = M_j * twist_dot_j + b_j + FT_by_child;
         non_linearities_.segment(6 + j, 1) = joint_j->S_w_.transpose() * FT[j];
       }
     }
